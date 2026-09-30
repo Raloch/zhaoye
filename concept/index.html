@@ -1,0 +1,885 @@
+<meta charset="utf-8" />
+<title>照夜封魔录设定集</title>
+<meta name="description" content="横版动作 ARPG《照夜封魔录》的前期视觉设定集：目标画面、五章场景、角色、怪物、Boss、招式、地图与剧情。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+/>
+<style>
+  :root {
+    --paper: #e7e6e1;
+    --panel: #f2f1ed;
+    --ink: #16171b;
+    --ink-2: #53555d;
+    --line: #cdcbc4;
+    --seal: #b3342b;
+    --teal: #16807a;
+    --gold: #9a7417;
+    --wood: #8a6a4a;
+    --fire: #d65a2c;
+    --pale: #74767d;
+    --display: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+    --body: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      color-scheme: dark;
+      --paper: #111216;
+      --panel: #1a1c21;
+      --ink: #e8e5dc;
+      --ink-2: #a4a6ad;
+      --line: #2e3138;
+      --seal: #e0574b;
+      --teal: #3fd0c9;
+      --gold: #e2b75a;
+      --wood: #a88a66;
+      --fire: #ff7a45;
+      --pale: #7d8088;
+    }
+  }
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --paper: #111216;
+    --panel: #1a1c21;
+    --ink: #e8e5dc;
+    --ink-2: #a4a6ad;
+    --line: #2e3138;
+    --seal: #e0574b;
+    --teal: #3fd0c9;
+    --gold: #e2b75a;
+    --wood: #a88a66;
+    --fire: #ff7a45;
+    --pale: #7d8088;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.75;
+    padding-inline: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1160px; margin-inline: auto; }
+  canvas { display: block; width: 100%; max-width: 100%; }
+  h1, h2, h3, h4 { margin: 0; text-wrap: balance; font-weight: 400; }
+  p { margin: 0; }
+  a { color: var(--teal); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  /* 刊头 */
+  .mast { padding-block: 56px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: end; }
+  .mast .eyebrow { font-size: 12px; letter-spacing: 0.16em; color: var(--ink-2); margin-bottom: 10px; }
+  .mast h1 { font-family: var(--display); font-size: clamp(56px, 9vw, 112px); line-height: 1; letter-spacing: 0.04em; }
+  .mast h1 .seal-mark {
+    display: inline-grid; place-items: center; width: 0.42em; height: 0.42em; margin-left: 0.18em; vertical-align: 0.9em;
+    background: var(--seal); color: var(--panel); font-size: 0.38em; border-radius: 3px;
+  }
+  .mast .lede { max-width: 34em; margin-top: 18px; font-size: 17px; color: var(--ink); }
+  .facts { display: grid; grid-template-columns: auto auto; gap: 4px 18px; margin: 0; font-size: 13px; }
+  .facts dt { color: var(--ink-2); }
+  .facts dd { margin: 0; }
+
+  nav.toc {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper);
+    border-bottom: 1px solid var(--line); margin-bottom: 8px;
+  }
+  nav.toc ul { list-style: none; margin: 0 auto; padding: 10px 0; display: flex; gap: 6px 22px; flex-wrap: wrap; max-width: 1160px; font-size: 14px; }
+  nav.toc a { color: var(--ink-2); text-decoration: none; }
+  nav.toc a:hover { color: var(--ink); }
+
+  section { padding-block: 64px 8px; scroll-margin-top: 56px; }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-bottom: 28px; max-width: 46em; }
+  .sec-head h2 { font-family: var(--display); font-size: 46px; line-height: 1.1; }
+  .sec-head p { color: var(--ink-2); }
+  h3 { font-family: var(--display); font-size: 28px; line-height: 1.2; }
+  .muted { color: var(--ink-2); }
+  .small { font-size: 13px; }
+
+  /* 目标画面 */
+  .frame { margin-top: 8px; }
+  .frame canvas { border-radius: 4px; }
+  .frame figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); max-width: 60em; }
+  .pillars { margin-top: 40px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+  .pillars h3 { font-size: 24px; margin-bottom: 6px; }
+  .pillars p { font-size: 14px; color: var(--ink-2); }
+
+  /* 场景 */
+  .banners { display: grid; gap: 36px; }
+  .banner canvas { border-radius: 3px; }
+  .banner figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; margin-top: 12px; align-items: start; }
+  .banner h3 { font-size: 26px; }
+  .banner p { font-size: 14px; color: var(--ink-2); }
+  figure { margin: 0; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .chip { display: grid; gap: 3px; justify-items: center; font-size: 10px; color: var(--ink-2); font-family: var(--mono); }
+  .chip i { display: block; width: 34px; height: 22px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08); }
+
+  /* 角色 */
+  .hero-feature { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 44px; }
+  .hero-feature canvas { border-radius: 3px; }
+  .pose-labels { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); text-align: center; font-size: 13px; color: var(--ink-2); }
+  .hero-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 10px; }
+  .hero-notes h4 { font-size: 13px; letter-spacing: 0.1em; color: var(--ink-2); margin-bottom: 4px; }
+  .hero-notes p { font-size: 14px; }
+  .swatch { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12); }
+
+  .grid { display: grid; gap: 28px 24px; }
+  .grid.npcs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid.foes { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px 18px; }
+  .grid.bosses { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 32px; }
+  .card canvas { border-radius: 3px; }
+  .card .name { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .card h3 { font-size: 24px; }
+  .card .tag { font-size: 12px; color: var(--ink-2); }
+  .card p { font-size: 14px; margin-top: 4px; }
+  .card .teach { color: var(--teal); font-size: 13px; margin-top: 6px; }
+  .stats { font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .card ul { margin: 8px 0 0; padding-left: 1.1em; font-size: 14px; }
+  .card li { margin: 2px 0; }
+  .lineup-box { margin-top: 44px; }
+  .lineup-box h3 { font-size: 24px; margin-bottom: 10px; }
+  .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .lineup-box canvas { min-width: 860px; border-radius: 3px; }
+
+  /* 招式 */
+  kbd {
+    display: inline-grid; place-items: center; min-width: 1.9em; height: 1.9em; padding: 0 0.35em; margin: 0 1px;
+    font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink); background: var(--panel);
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; line-height: 1;
+  }
+  kbd.act { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+  kbd.d { font-family: var(--body); font-size: 14px; font-weight: 700; }
+  .ctx { font-size: 12px; color: var(--ink-2); margin-right: 2px; }
+  .keys { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-bottom: 40px; }
+  .keyboard { display: grid; gap: 8px; }
+  .keyrow { display: flex; gap: 8px; flex-wrap: wrap; }
+  .key { display: grid; gap: 4px; justify-items: center; width: 64px; text-align: center; font-size: 12px; color: var(--ink-2); line-height: 1.3; }
+  .key kbd { width: 44px; height: 44px; font-size: 16px; }
+  .key.new kbd { border-color: var(--teal); color: var(--teal); }
+  .keys h3 { font-size: 22px; margin-bottom: 12px; }
+
+  .table-box { overflow-x: auto; margin-bottom: 36px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 720px; }
+  caption { text-align: left; font-family: var(--display); font-size: 24px; padding-bottom: 8px; }
+  th { text-align: left; font-weight: 600; font-size: 12px; color: var(--ink-2); padding: 8px 10px; border-bottom: 1px solid var(--ink); }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.num { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.cmd { white-space: nowrap; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  .two { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; }
+  .combos { display: grid; gap: 14px; }
+  .combo { display: grid; gap: 4px; }
+  .combo b { font-weight: 600; font-size: 14px; }
+  .combo .route { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 13px; }
+  .combo .route .to { color: var(--ink-2); margin: 0 2px; }
+  .legend { display: grid; gap: 12px; }
+  .warn { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
+  .warn i { display: block; width: 40px; height: 26px; border-radius: 3px; }
+  .warn .w { background: #101217; box-shadow: inset 0 0 0 2px #ffffff, 0 0 8px 2px rgb(255 255 255 / 0.85); }
+  .warn .r { background: #101217; box-shadow: inset 0 0 0 2px #ff3b30, 0 0 8px 2px rgb(255 59 48 / 0.8); }
+  .warn .p { background: #101217; box-shadow: inset 0 0 0 2px #c07bff, 0 0 8px 2px rgb(192 123 255 / 0.8); }
+  .warn span { font-size: 14px; }
+  .ranks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 8px; }
+  .rank { text-align: center; font-size: 12px; color: var(--ink-2); line-height: 1.45; }
+  .rank .stamp {
+    display: grid; place-items: center; width: 46px; height: 46px; margin: 0 auto 6px; background: var(--seal); color: var(--panel);
+    font-family: var(--display); font-size: 30px; border-radius: 3px; transform: rotate(-6deg);
+  }
+  .rank:nth-child(2n) .stamp { transform: rotate(5deg); }
+  .rank b { display: block; font-family: var(--mono); color: var(--ink); font-size: 13px; }
+
+  /* 地图 */
+  .world canvas { border-radius: 3px; }
+  .greybox-box { margin-top: 44px; }
+  .greybox-box .scroll-x { border-radius: 3px; border: 1px solid var(--line); }
+  .greybox-box canvas { width: 3840px; max-width: none; }
+  .gb-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+  .gb-legend span::before { content: attr(data-g); font-family: var(--mono); color: var(--ink); margin-right: 6px; font-weight: 600; }
+  .pacing-box { margin-top: 44px; }
+  #pacing { display: grid; gap: 10px; margin-top: 12px; }
+  .pace-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: end; }
+  .pace-ch { font-size: 13px; color: var(--ink-2); padding-bottom: 20px; }
+  .pace-track { display: flex; gap: 3px; height: 92px; align-items: stretch; }
+  .pace-seg { position: relative; flex-basis: 0; display: grid; grid-template-rows: 1fr auto; min-width: 0; }
+  .pace-bar { align-self: end; height: calc(12px + var(--lv) * 12px); border-radius: 2px 2px 0 0; }
+  .pace-name { font-size: 11px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-top: 4px; height: 20px; }
+  .k-push .pace-bar { background: var(--pale); }
+  .k-arena .pace-bar { background: var(--seal); }
+  .k-plat .pace-bar { background: var(--teal); }
+  .k-peace .pace-bar { background: #6e9b5a; }
+  .k-story .pace-bar { background: var(--gold); }
+  .k-boss .pace-bar { background: var(--ink); }
+  .pace-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+  .pace-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 5px; }
+
+  /* 剧情 */
+  .story { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--ink); }
+  .beat { padding: 16px 16px 20px 0; display: grid; grid-template-rows: auto auto 1fr auto; gap: 8px; }
+  .beat + .beat { padding-left: 16px; border-left: 1px solid var(--line); }
+  .beat .num { font-family: var(--display); font-size: 20px; color: var(--seal); }
+  .beat h3 { font-size: 26px; }
+  .beat p { font-size: 14px; }
+  .beat .meta { font-size: 12px; color: var(--ink-2); line-height: 1.6; }
+  .belief { font-family: var(--display); font-size: 18px; line-height: 1.45; color: var(--teal); border-top: 1px dashed var(--line); padding-top: 10px; }
+  .coda { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-top: 36px; }
+  .coda blockquote { margin: 0; font-family: var(--display); font-size: 30px; line-height: 1.35; }
+  .coda blockquote cite { display: block; font-family: var(--body); font-style: normal; font-size: 13px; color: var(--ink-2); margin-top: 8px; }
+
+  /* 待确认 */
+  .decisions { display: grid; gap: 0; border-top: 1px solid var(--ink); }
+  .decision { display: grid; grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .decision h3 { font-size: 22px; }
+  .decision .pick { font-weight: 600; }
+  .decision .alt { color: var(--ink-2); font-size: 14px; }
+  footer { padding-block: 56px 72px; color: var(--ink-2); font-size: 13px; }
+  footer code { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .mast { grid-template-columns: minmax(0, 1fr); }
+    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.npcs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.foes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.bosses { grid-template-columns: minmax(0, 1fr); }
+    .keys, .two, .coda { grid-template-columns: minmax(0, 1fr); }
+    .story { grid-template-columns: minmax(0, 1fr); }
+    .beat, .beat + .beat { padding: 16px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+    .hero-notes { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .decision { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .banner figcaption { grid-template-columns: minmax(0, 1fr); }
+    .chips { justify-content: flex-start; }
+  }
+  @media (max-width: 560px) {
+    .pillars { grid-template-columns: minmax(0, 1fr); }
+    .grid.foes { grid-template-columns: minmax(0, 1fr); }
+    .pose-labels { font-size: 11px; }
+    .pace-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .pace-ch { padding-bottom: 0; }
+    .sec-head h2 { font-size: 38px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div>
+      <p class="eyebrow">横版动作 ARPG · 前期设定集 · M0</p>
+      <h1>照夜封魔录<span class="seal-mark" aria-hidden="true">昭</span></h1>
+      <p class="lede">少年剑客叶昭手持照夜剑，一路破尽幻术，揭穿魔族右护法蜃楼的篡位阴谋，救出被囚的魔君，守住维系了三百年的人魔之盟。</p>
+    </div>
+    <dl class="facts">
+      <dt>类型</dt><dd>横版动作 ARPG，搓招连段</dd>
+      <dt>平台</dt><dd>PC 浏览器，键盘优先</dd>
+      <dt>规模</dt><dd>5 章，首通 60～90 分钟</dd>
+      <dt>操作</dt><dd>WASD + J K L I，新增 U O</dd>
+      <dt>美术</dt><dd>水墨剪影 + 霓光剑气</dd>
+      <dt>技术</dt><dd>TypeScript + Canvas 2D</dd>
+    </dl>
+  </header>
+</div>
+
+<nav class="toc" aria-label="目录">
+  <ul>
+    <li><a href="#frame">目标画面</a></li>
+    <li><a href="#scenes">五章场景</a></li>
+    <li><a href="#cast">角色</a></li>
+    <li><a href="#foes">怪物</a></li>
+    <li><a href="#bosses">Boss</a></li>
+    <li><a href="#combat">招式与连段</a></li>
+    <li><a href="#levels">地图与关卡</a></li>
+    <li><a href="#story">剧情</a></li>
+    <li><a href="#open">待确认</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+  <section id="frame" style="padding-top: 28px">
+    <figure class="frame">
+      <canvas data-board="frame" role="img" aria-label="目标画面：黄昏着火的青崖镇，叶昭上挑把一只灰狼挑上半空，右侧灰狼亮起白色预警，左上角是生命、灵力、剑意，右侧是 12 连击和「妙」字评级印章"></canvas>
+      <figcaption>
+        目标画面，逻辑分辨率 480×270。叶昭用「上挑」把灰狼挑上半空（墨溅 + 冲击环是命中反馈）；右边那只灰狼轮廓发白，表示它要出一记可以格挡的攻击；左后方还有一只在绕背。左上是生命、灵力和五格剑意，右侧是连击数和评级印章「妙」。这张图里的角色、怪物和背景全部由代码实时绘制，用的就是正式游戏计划采用的骨骼 + 程序化水墨管线。
+      </figcaption>
+    </figure>
+    <div class="pillars">
+      <div>
+        <h3>连招爽快</h3>
+        <p>地面起手，挑空，空中追击，坠星弹地，再挑。招式用得越杂，剑意涨得越快。</p>
+      </div>
+      <div>
+        <h3>读招反击</h3>
+        <p>白光可挡，红光必闪，紫光是幻术。弹反成功给硬直和剑意，Boss 战考的是看破时机。</p>
+      </div>
+      <div>
+        <h3>照夜破幻</h3>
+        <p>按 U 照出真相：假平台、幻影敌人、Boss 分身、被操控的 NPC。机制和剧情主题是同一件事。</p>
+      </div>
+      <div>
+        <h3>水墨剪影</h3>
+        <p>角色是骨骼动画的剪影，背景是程序生成的水墨山水。一个程序员就能量产，风格统一。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scenes">
+    <div class="sec-head">
+      <h2>五章场景</h2>
+      <p>每章一套色板。规则是远淡近浓：背景低饱和，只有剑光、眼睛和点缀色是亮的，黑色剪影永远站在最前面。</p>
+    </div>
+    <div class="banners">
+      <figure class="banner">
+        <canvas data-board="banner" data-ch="1" role="img" aria-label="第一章场景：夕阳、烟柱、牌坊和着火的集镇，叶昭挥剑劈向两只灰狼"></canvas>
+        <figcaption>
+          <div>
+            <h3>第一章 青崖镇 · 黄昏烽火</h3>
+            <p>夕阳、远塔、烟柱、牌坊，集镇的窗里全是火光。叶昭在这里还拿着铁剑，章末才换成照夜剑。</p>
+          </div>
+          <div class="chips" aria-label="色板">
+            <span class="chip"><i style="background:#f4d3a0"></i>#f4d3a0</span>
+            <span class="chip"><i style="background:#e2825e"></i>#e2825e</span>
+            <span class="chip"><i style="background:#c99a82"></i>#c99a82</span>
+            <span class="chip"><i style="background:#8e6660"></i>#8e6660</span>
+            <span class="chip"><i style="background:#4a3436"></i>#4a3436</span>
+            <span class="chip"><i style="background:#ff8a3d"></i>#ff8a3d</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="banner">
+        <canvas data-board="banner" data-ch="2" role="img" aria-label="第二章场景：三层竹林和浓雾，叶昭举剑面对藤精和蛊蛾，小蝠躲在身后"></canvas>
+        <figcaption>
+          <div>
+            <h3>第二章 雾隐竹林 · 晨雾</h3>
+            <p>三层竹林叠着浓雾，雾底透出一点淡紫，那是蜃气，给后文埋的伏笔。小蝠在这一章登场。</p>
+          </div>
+          <div class="chips" aria-label="色板">
+            <span class="chip"><i style="background:#e8eee6"></i>#e8eee6</span>
+            <span class="chip"><i style="background:#c3d3c6"></i>#c3d3c6</span>
+            <span class="chip"><i style="background:#a9bfae"></i>#a9bfae</span>
+            <span class="chip"><i style="background:#7c9887"></i>#7c9887</span>
+            <span class="chip"><i style="background:#3e5448"></i>#3e5448</span>
+            <span class="chip"><i style="background:#9be38a"></i>#9be38a</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="banner">
+        <canvas data-board="banner" data-ch="3" role="img" aria-label="第三章场景：断崖、吊索桥和开裂的镇魔碑，叶昭冲向石傀儡，骷髅弓手在远处拉弓"></canvas>
+        <figcaption>
+          <div>
+            <h3>第三章 断岳山 · 寒岩</h3>
+            <p>冷灰色的断崖和吊索桥，镇魔碑的裂缝透出地底烛幽的红光。石傀儡和骷髅弓手在这里出场。</p>
+          </div>
+          <div class="chips" aria-label="色板">
+            <span class="chip"><i style="background:#d5d9df"></i>#d5d9df</span>
+            <span class="chip"><i style="background:#9aa1ad"></i>#9aa1ad</span>
+            <span class="chip"><i style="background:#8a909b"></i>#8a909b</span>
+            <span class="chip"><i style="background:#626873"></i>#626873</span>
+            <span class="chip"><i style="background:#35383f"></i>#35383f</span>
+            <span class="chip"><i style="background:#ff4a2a"></i>#ff4a2a</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="banner">
+        <canvas data-board="banner" data-ch="4" role="img" aria-label="第四章场景：紫色暮光下的沼泽和枯树倒影，天边漂着海市蜃楼，叶昭面对沼蛙妖和半透明的幻影魔兵"></canvas>
+        <figcaption>
+          <div>
+            <h3>第四章 幽泽 · 紫暮</h3>
+            <p>沼泽、枯树倒影、磷火，天边漂着一座半透明的海市蜃楼。紫色的蜃火和幻影魔兵只有被照夜照到才会现形。</p>
+          </div>
+          <div class="chips" aria-label="色板">
+            <span class="chip"><i style="background:#8d7cab"></i>#8d7cab</span>
+            <span class="chip"><i style="background:#463c63"></i>#463c63</span>
+            <span class="chip"><i style="background:#6a5f86"></i>#6a5f86</span>
+            <span class="chip"><i style="background:#4d4668"></i>#4d4668</span>
+            <span class="chip"><i style="background:#2a2640"></i>#2a2640</span>
+            <span class="chip"><i style="background:#6dffd2"></i>#6dffd2</span>
+          </div>
+        </figcaption>
+      </figure>
+      <figure class="banner">
+        <canvas data-board="banner" data-ch="5" role="img" aria-label="第五章场景：浮空宫殿碎块、金色光环和云海，叶昭升龙斩跃起，镜魅和远处的蜃楼在前方"></canvas>
+        <figcaption>
+          <div>
+            <h3>第五章 蜃楼幻宫 · 金紫</h3>
+            <p>浮空的宫殿碎块、倒悬的楼阁、漂浮的镜片和云海。全作最华丽、也最不真实的一章，金色只留给幻术和宫殿的描边。</p>
+          </div>
+          <div class="chips" aria-label="色板">
+            <span class="chip"><i style="background:#231a3f"></i>#231a3f</span>
+            <span class="chip"><i style="background:#5a3479"></i>#5a3479</span>
+            <span class="chip"><i style="background:#4a3268"></i>#4a3268</span>
+            <span class="chip"><i style="background:#3a2955"></i>#3a2955</span>
+            <span class="chip"><i style="background:#1f1631"></i>#1f1631</span>
+            <span class="chip"><i style="background:#f3c86b"></i>#f3c86b</span>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="cast">
+    <div class="sec-head">
+      <h2>角色</h2>
+      <p>剪影风格下，轮廓就是角色。每个人都要在缩成一团黑影时还能认出来，所以每人都标了剪影识别点。</p>
+    </div>
+    <div class="hero-feature">
+      <h3>叶昭</h3>
+      <canvas data-board="heroStrip" role="img" aria-label="叶昭的六个姿势：待机、疾跑、断岳、上挑、坠星、升龙斩"></canvas>
+      <div class="pose-labels" aria-hidden="true">
+        <span>待机</span><span>疾跑</span><span>青锋·四「断岳」</span><span>上挑</span><span>坠星</span><span>升龙斩</span>
+      </div>
+      <div class="hero-notes">
+        <div>
+          <h4>身份</h4>
+          <p>17 岁，青崖观玄一真人的弟子。自信、有点冲，一开始对魔族有成见，一路学会先照见真相再下判断。</p>
+        </div>
+        <div>
+          <h4>剪影识别点</h4>
+          <p>高马尾，两条飘在身后的发带，短下摆劲装，一把直剑。发带、马尾、衣摆都是软链，跟着动作甩。</p>
+        </div>
+        <div>
+          <h4>尺寸与颜色</h4>
+          <p><span class="swatch" style="background:#3fd0c9"></span>青碧 <span class="mono">#3fd0c9</span>（发带、腰带）；照夜剑光 <span class="swatch" style="background:#7fe8ff"></span><span class="mono">#7fe8ff</span>。身高 44 逻辑像素，约 6 头身。</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid npcs">
+      <article class="card">
+        <canvas data-board="npc" data-id="xuanyi" role="img" aria-label="玄一真人：长须老道，手持拂尘"></canvas>
+        <div class="name"><h3>玄一真人</h3><span class="tag">师父 · 人族守碑人</span></div>
+        <p>温和话少，说话总留半句。第 1 章交出照夜剑。</p>
+        <p class="muted small"><span class="swatch" style="background:#c9a55a"></span>识别点：长须、拂尘、及踝长袍</p>
+      </article>
+      <article class="card">
+        <canvas data-board="npc" data-id="bat" role="img" aria-label="小蝠：大耳朵的蝙蝠小妖，斜挎小布包"></canvas>
+        <div class="name"><h3>小蝠</h3><span class="tag">魔君信使 · 营地商人</span></div>
+        <p>话痨、胆小、嘴快，关键时刻讲义气。第 2 章起在营地开店。</p>
+        <p class="muted small"><span class="swatch" style="background:#e0a94a"></span>识别点：超大耳朵、小布包</p>
+      </article>
+      <article class="card">
+        <canvas data-board="npc" data-id="xuanshuang" role="img" aria-label="魔君玄霜：银发、小角、月牙冠，手边浮着冰晶"></canvas>
+        <div class="name"><h3>魔君玄霜</h3><span class="tag">魔族之主 · 第 5 章参战</span></div>
+        <p>冷静克制，被囚在镜狱里一直等着守碑人。最终战定时冻结蜃龙。</p>
+        <p class="muted small"><span class="swatch" style="background:#9fd8ff"></span>识别点：小角、月牙冠、及腰银发、广袖</p>
+      </article>
+      <article class="card">
+        <canvas data-board="npc" data-id="shenlou" role="img" aria-label="蜃楼：高冠长袍，手持折扇，下半身化作紫雾"></canvas>
+        <div class="name"><h3>蜃楼</h3><span class="tag">右护法 · 最终 Boss</span></div>
+        <p>千年蜃妖，优雅礼貌，真心认为自己在解放魔族。</p>
+        <p class="muted small"><span class="swatch" style="background:#b36bff"></span>识别点：高冠、折扇、下半身是雾（全作唯一没有腿）</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="foes">
+    <div class="sec-head">
+      <h2>怪物</h2>
+      <p>10 种杂兵，每种只教一件事。新敌人先单独出场一次，再和老敌人混编。HP 按首次出场章节计。</p>
+    </div>
+    <div class="grid foes">
+      <article class="card">
+        <canvas data-board="enemy" data-id="wolf" role="img" aria-label="灰狼妖，伏低准备扑咬"></canvas>
+        <div class="name"><h3>灰狼妖</h3><span class="tag">第一章</span></div>
+        <p class="stats">HP 50 · 韧性 0 · 40×24</p>
+        <p>成群绕圈，会绕到背后。伏低 18f 后扑咬，扑空原地硬直 30f。</p>
+        <p class="teach">教：基础连段，留意背后</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="wisp" role="img" aria-label="鬼火，一团长着眼睛的青色火焰"></canvas>
+        <div class="name"><h3>鬼火</h3><span class="tag">第一、四章</span></div>
+        <p class="stats">HP 16 · 韧性 0 · 16×20</p>
+        <p>在头顶游荡，发亮 24f 后俯冲。第 4 章的紫色「蜃火」有一半是幻象。</p>
+        <p class="teach">教：空中攻击、上挑</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="wolfGuard" role="img" aria-label="狼卫，一手木盾，一手弯刀"></canvas>
+        <div class="name"><h3>狼卫</h3><span class="tag">第一章</span></div>
+        <p class="stats">HP 90 · 韧性 30 · 32×48</p>
+        <p>举盾挡住普攻。断岳、蓄力斩、穿云刺可以破防，破防后硬直 40f。</p>
+        <p class="teach">教：光按 J 不行</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="treant" role="img" aria-label="藤精，会走路的断树桩，藤蔓当手"></canvas>
+        <div class="name"><h3>藤精</h3><span class="tag">第二章</span></div>
+        <p class="stats">HP 140 · 韧性 60 · 36×44</p>
+        <p>玩家脚下冒尘土 30f 后钻出藤刺；出招时带霸体。缠绕是红光。</p>
+        <p class="teach">教：读地面预警、闪步</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="moth" role="img" aria-label="蛊蛾，翅膀上有眼状斑纹，洒下毒粉"></canvas>
+        <div class="name"><h3>蛊蛾</h3><span class="tag">第二章</span></div>
+        <p class="stats">HP 36 · 韧性 0 · 28×20</p>
+        <p>高处盘旋，一靠近就飞走，在下方留下持续 4 秒的毒雾。</p>
+        <p class="teach">教：用剑气·破月打飞行单位</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="skeleton" role="img" aria-label="骷髅刀兵和骷髅弓手"></canvas>
+        <div class="name"><h3>骷髅兵</h3><span class="tag">第三章 · 刀兵 / 弓手</span></div>
+        <p class="stats">HP 70 · 韧性 20 · 24×44</p>
+        <p>刀兵散架后 5 秒会重新拼起来，只有追地攻击能打碎。弓手近身就死。</p>
+        <p class="teach">教：追地攻击、近身压制</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="golem" role="img" aria-label="石傀儡，背后嵌着发红光的符文"></canvas>
+        <div class="name"><h3>石傀儡</h3><span class="tag">第三章</span></div>
+        <p class="stats">HP 320 · 韧性 120 · 56×64</p>
+        <p>全程霸体，砸地是红光。背后的符文受伤 ×2、削韧 ×2。</p>
+        <p class="teach">教：闪步绕背、破韧</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="frog" role="img" aria-label="沼蛙妖，矮胖的直立蛙"></canvas>
+        <div class="name"><h3>沼蛙妖</h3><span class="tag">第四章</span></div>
+        <p class="stats">HP 180 · 韧性 40 · 40×36</p>
+        <p>高跳后影子先落地再砸下；吐舌擒拿是红光，被抓要连按挣脱。</p>
+        <p class="teach">教：对空（升龙斩）</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="phantom" role="img" aria-label="幻影魔兵：左边是半透明的幻象，右边是被照夜照破后的实体"></canvas>
+        <div class="name"><h3>幻影魔兵</h3><span class="tag">第四、五章</span></div>
+        <p class="stats">HP 160 · 韧性 50 · 28×48</p>
+        <p>左：幻甲状态，伤害 −80%。右：被照夜照破后的实体。一组里还混着纯幻象的假兵。</p>
+        <p class="teach">教：照夜（U）</p>
+      </article>
+      <article class="card">
+        <canvas data-board="enemy" data-id="mirror" role="img" aria-label="镜魅，由镜子碎片拼成的人形"></canvas>
+        <div class="name"><h3>镜魅</h3><span class="tag">第五章</span></div>
+        <p class="stats">HP 220 · 韧性 60 · 28×48</p>
+        <p>记住你最近用过的 3 个特技，隔一会儿用同样的招打回来。</p>
+        <p class="teach">教：招式多样性</p>
+      </article>
+    </div>
+    <div class="lineup-box">
+      <h3>体型对比</h3>
+      <p class="muted small" style="margin-bottom: 10px">同一比例尺。虚线是主角身高的 1、2、3 倍。蜃龙太大，不在此列。</p>
+      <div class="scroll-x">
+        <canvas data-board="lineup" role="img" aria-label="所有角色和怪物按同一比例并排站立"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section id="bosses">
+    <div class="sec-head">
+      <h2>Boss</h2>
+      <p>每章一个，专门考这一章学到的东西。每个大招收招后都有明确的惩罚窗口。左边的叶昭是同比例的尺寸参照。</p>
+    </div>
+    <div class="grid bosses">
+      <article class="card">
+        <canvas data-board="boss" data-id="heizong" role="img" aria-label="黑鬃，驼背狼人，颈上钢针般的鬃毛，爪子很长"></canvas>
+        <div class="name"><h3>黑鬃</h3><span class="tag">第一章 · 镇祠广场</span></div>
+        <p class="stats">HP 1000 · 韧性 100 · 高 72</p>
+        <ul>
+          <li>扑击三连：白、白、红，第三扑之后喘气 50f</li>
+          <li>横扫爪：大范围白光，用来教弹反</li>
+          <li>嚎叫召狼，冷却 20 秒</li>
+          <li>二阶段「天坠」：影子追踪 2 秒后砸下，爪子卡地 60f</li>
+        </ul>
+        <p class="teach">考：看预警，闪步躲红光，抓惩罚窗口</p>
+      </article>
+      <article class="card">
+        <canvas data-board="boss" data-id="vineHag" role="img" aria-label="枯藤姥姥，长着老妇人脸的巨大古树，胸口有紫色的核"></canvas>
+        <div class="name"><h3>枯藤姥姥</h3><span class="tag">第二章 · 古树祭坛</span></div>
+        <p class="stats">HP 1500 · 固定 Boss · 高 140</p>
+        <ul>
+          <li>本体有幻甲；照夜照中胸口心核，心核暴露 8 秒，伤害 ×1.5</li>
+          <li>地刺连环、藤臂横扫与下砸、孢子弹幕</li>
+          <li>二阶段荆棘满地，只能在两侧竹台上打</li>
+        </ul>
+        <p class="teach">考：照夜在战斗中的用法、平台、远程</p>
+      </article>
+      <article class="card">
+        <canvas data-board="boss" data-id="zhenyue" role="img" aria-label="镇岳，手持长柄大刀的石像将军，裂缝透出红光"></canvas>
+        <div class="name"><h3>镇岳</h3><span class="tag">第三章 · 镇魔碑前</span></div>
+        <p class="stats">HP 2400 · 韧性 300 · 高 128</p>
+        <ul>
+          <li>全程霸体；韧性打空后跪地 4 秒，头部能被空中连段打到</li>
+          <li>横斩（跳）、纵劈冲击波（跳）、岩刺</li>
+          <li>碑印：手掌发红光的擒拿，只能闪步</li>
+          <li>二阶段落石，横斩接纵劈</li>
+        </ul>
+        <p class="teach">考：破韧、对空（升龙斩）</p>
+      </article>
+      <article class="card">
+        <canvas data-board="boss" data-id="gusha" role="img" aria-label="骨刹，弯角盔、双弯刀、破披风的骷髅武将"></canvas>
+        <div class="name"><h3>骨刹</h3><span class="tag">第四章 · 幽泽关石桥</span></div>
+        <p class="stats">HP 3000 · 韧性 150 · 高 60</p>
+        <ul>
+          <li>同一种普攻连打 3 次以上，会被他弹反</li>
+          <li>双刀四连、瞬步回身斩、回旋刀、骨刺</li>
+          <li>二阶段怨魂附体，斩击全变红光；分出两个幻影，照夜找真身</li>
+          <li>偶尔收刀变慢：「这一刀……为何……」</li>
+        </ul>
+        <p class="teach">考：混用招式、照夜辨真身</p>
+      </article>
+      <article class="card">
+        <canvas data-board="boss" data-id="shenlou" role="img" aria-label="蜃楼，浮空的幻术师，高冠折扇"></canvas>
+        <div class="name"><h3>蜃楼</h3><span class="tag">第五章 · 幻宫天台</span></div>
+        <p class="stats">HP 2900 · 韧性 120 · 高 52</p>
+        <ul>
+          <li>分身：四个分身绕圈同时出招，只有真身有影子</li>
+          <li>幻镜：光弹在两侧镜子间来回反弹</li>
+          <li>二阶段「蜃气潮」：全场变黑 12 秒，只剩照夜的光圈</li>
+          <li>海市：真假地板，照夜分辨</li>
+        </ul>
+        <p class="teach">考：前四章学过的全部</p>
+      </article>
+      <article class="card">
+        <canvas data-board="boss" data-id="dragon" role="img" aria-label="蜃龙，头顶扇贝般冠壳的巨大蛟龙，吐出紫色蜃气"></canvas>
+        <div class="name"><h3>蜃龙</h3><span class="tag">第五章 · 云海浮台</span></div>
+        <p class="stats">HP 3500 · 只有头部受伤 · 超出画面</p>
+        <ul>
+          <li>在上下漂移的浮台上作战，掉下云海扣 15% 生命</li>
+          <li>龙息扫射（红）、咬台、尾扫、追踪蜃气弹</li>
+          <li>玄霜每 25 秒冻结蜃龙 4 秒，此时放奥义触发「照夜·霜月」合击</li>
+        </ul>
+        <p class="teach">收尾：按住 J 插剑封印，不会失败</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="combat">
+    <div class="sec-head">
+      <h2>招式与连段</h2>
+      <p>键位沿用《灵剑封魔录》，新增 U 照夜、O 奥义。指令里的 → 指面朝方向。帧数按 60 帧/秒，格式是「起手 / 判定 / 收招」。</p>
+    </div>
+    <div class="keys">
+      <div>
+        <h3>左手</h3>
+        <div class="keyboard">
+          <div class="keyrow">
+            <div class="key new"><kbd>Q</kbd>换道具</div>
+            <div class="key"><kbd>W</kbd>上 · 交互</div>
+          </div>
+          <div class="keyrow">
+            <div class="key"><kbd>A</kbd>左 · 双击疾跑</div>
+            <div class="key"><kbd>S</kbd>下 · S+K 下平台</div>
+            <div class="key"><kbd>D</kbd>右 · 双击疾跑</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>右手</h3>
+        <div class="keyboard">
+          <div class="keyrow">
+            <div class="key new"><kbd>U</kbd>照夜</div>
+            <div class="key"><kbd>I</kbd>道具</div>
+            <div class="key new"><kbd>O</kbd>奥义</div>
+          </div>
+          <div class="keyrow">
+            <div class="key"><kbd>J</kbd>攻击 · 按住蓄力</div>
+            <div class="key"><kbd>K</kbd>跳 · 受身</div>
+            <div class="key"><kbd>L</kbd>格挡 · 弹反 · 闪步</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <caption>基础技 · 不耗灵力</caption>
+        <thead><tr><th>招式</th><th>指令</th><th>帧数</th><th>倍率</th><th>效果</th></tr></thead>
+        <tbody>
+          <tr><td>青锋·一 / 二 / 三</td><td class="cmd"><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd></td><td class="num">5/3/12 · 5/3/13 · 6/4/14</td><td class="num">1.0 · 1.0 · 1.2</td><td>硬直 18f；第三段前移 12</td></tr>
+          <tr><td>青锋·四「断岳」</td><td class="cmd"><span class="ctx">续</span><kbd class="act">J</kbd></td><td class="num">10/4/22</td><td class="num">2.0</td><td>斜向击飞、破防，顿帧 6f</td></tr>
+          <tr><td>蓄力斩</td><td class="cmd"><span class="ctx">按住 30f</span><kbd class="act">J</kbd></td><td class="num">8/5/20</td><td class="num">3.0</td><td>击飞、破防、削韧 ×2</td></tr>
+          <tr><td>上挑</td><td class="cmd"><kbd class="d">↑</kbd><kbd class="act">J</kbd></td><td class="num">7/4/18</td><td class="num">1.2</td><td>挑空约 60；命中可跳跃取消</td></tr>
+          <tr><td>扫堂</td><td class="cmd"><kbd class="d">↓</kbd><kbd class="act">J</kbd></td><td class="num">6/4/16</td><td class="num">0.8</td><td>击倒</td></tr>
+          <tr><td>冲刺斩</td><td class="cmd"><span class="ctx">疾跑中</span><kbd class="act">J</kbd></td><td class="num">4/6/16</td><td class="num">1.5</td><td>前冲 40（对应原作「快进+J」）</td></tr>
+          <tr><td>空斩 ×3</td><td class="cmd"><span class="ctx">空中</span><kbd class="act">J</kbd></td><td class="num">4/3/10</td><td class="num">0.8</td><td>每段微微上浮，第三段击落</td></tr>
+          <tr><td>坠星</td><td class="cmd"><span class="ctx">空中</span><kbd class="d">↓</kbd><kbd class="act">J</kbd></td><td class="num">6/落地/14</td><td class="num">1.5</td><td>落地冲击，敌人地面弹起</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <caption>特技 · 耗灵力，随剧情解锁</caption>
+        <thead><tr><th>招式</th><th>指令</th><th>解锁</th><th>灵力</th><th>帧数</th><th>倍率</th><th>效果</th></tr></thead>
+        <tbody>
+          <tr><td>穿云刺</td><td class="cmd"><kbd class="d">←</kbd><kbd class="d">→</kbd><kbd class="act">J</kbd></td><td>第一章</td><td class="num">10</td><td class="num">6/8/18</td><td class="num">1.8</td><td>突进 80，穿过敌人，边界墙弹</td></tr>
+          <tr><td>剑气·破月</td><td class="cmd"><kbd class="d">↓</kbd><kbd class="d">→</kbd><kbd class="act">J</kbd></td><td>第二章</td><td class="num">15</td><td class="num">10/—/16</td><td class="num">1.6</td><td>月牙剑气，射程 240，能照破幻象</td></tr>
+          <tr><td>升龙斩</td><td class="cmd"><kbd class="d">↓</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd></td><td>第三章</td><td class="num">20</td><td class="num">3/12/24</td><td class="num">0.8×3</td><td>第 1～8 帧无敌，三段上升斩</td></tr>
+          <tr><td>疾风连斩</td><td class="cmd"><kbd class="d">→</kbd><kbd class="d">→</kbd><kbd class="act">J</kbd></td><td>第四章</td><td class="num">25</td><td class="num">8/36/20</td><td class="num">0.6×6+1.5</td><td>六次穿身斩（对应原作「风魔乱舞」）</td></tr>
+          <tr><td>镇地剑</td><td class="cmd"><kbd class="d">↓</kbd><kbd class="d">↓</kbd><kbd class="act">J</kbd></td><td>第五章</td><td class="num">30</td><td class="num">14/6/26</td><td class="num">3.0</td><td>两侧冲击波，着地的敌人全部弹起</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <caption>防御 · 照夜 · 奥义</caption>
+        <thead><tr><th>动作</th><th>输入</th><th>参数</th><th>效果</th></tr></thead>
+        <tbody>
+          <tr><td>格挡</td><td class="cmd"><span class="ctx">按住</span><kbd class="act">L</kbd></td><td class="num">起手 2f</td><td>挡住正面白光攻击，不掉血，被推开</td></tr>
+          <tr><td>弹反</td><td class="cmd"><span class="ctx">受击前</span><kbd class="act">L</kbd></td><td class="num">窗口 6f</td><td>敌人硬直 30f，剑意 +10，「锵」</td></tr>
+          <tr><td>回风</td><td class="cmd"><span class="ctx">弹反后</span><kbd class="act">J</kbd></td><td class="num">3/4/16 · 2.5</td><td>必定暴击的反击</td></tr>
+          <tr><td>闪步</td><td class="cmd"><kbd class="act">L</kbd>+<kbd class="d">←</kbd>/<kbd class="d">→</kbd></td><td class="num">22f，2～11 帧无敌</td><td>位移 56，可以穿过敌人；唯一能躲红光的办法</td></tr>
+          <tr><td>受身</td><td class="cmd"><span class="ctx">被击飞时</span><kbd class="act">K</kbd></td><td class="num">无敌 20f</td><td>空中翻身落地，不被连续追打</td></tr>
+          <tr><td>照夜</td><td class="cmd"><kbd class="act">U</kbd></td><td class="num">15 灵力 · 冷却 4s</td><td>半径 80 的光圈持续 3 秒：幻象显形或消散，幻甲剥落 6 秒</td></tr>
+          <tr><td>奥义·照夜破晓</td><td class="cmd"><kbd class="act">O</kbd></td><td class="num">剑意 100</td><td>无敌瞬移斩全屏 12 次，末击 6.0 并定格</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two">
+      <div>
+        <h3 style="margin-bottom: 14px">连段范例</h3>
+        <div class="combos">
+          <div class="combo"><b>入门</b><div class="route"><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd></div></div>
+          <div class="combo"><b>挑空</b><div class="route"><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">K</kbd><span class="to">→</span><span class="ctx">空</span><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="d">↓</kbd><kbd class="act">J</kbd></div></div>
+          <div class="combo"><b>中级</b><div class="route"><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">K</kbd><span class="ctx">空</span><kbd class="act">J</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">K</kbd><span class="ctx">空</span><kbd class="act">J</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="d">↓</kbd><kbd class="act">J</kbd><span class="ctx">弹起</span><kbd class="d">↑</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="d">↓</kbd><kbd class="d">→</kbd><kbd class="act">J</kbd></div></div>
+          <div class="combo"><b>反击</b><div class="route"><span class="ctx">弹反</span><kbd class="act">L</kbd><span class="to">→</span><kbd class="act">J</kbd><span class="to">→</span><kbd class="d">←</kbd><kbd class="d">→</kbd><kbd class="act">J</kbd><span class="ctx">墙弹</span><span class="to">→</span><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd></div></div>
+          <div class="combo"><b>高级</b><div class="route"><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">K</kbd><span class="ctx">空</span><kbd class="act">J</kbd><kbd class="act">J</kbd><kbd class="act">K</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="d">↓</kbd><kbd class="act">J</kbd><span class="ctx">弹起</span><kbd class="d">↓</kbd><kbd class="d">↑</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">K</kbd><kbd class="act">J</kbd><kbd class="act">J</kbd><span class="to">→</span><kbd class="act">O</kbd></div></div>
+        </div>
+        <p class="muted small" style="margin-top: 16px">取消窗口：判定第 1 帧到收招第 8 帧；窗口打开前 8f 内按的键会被缓冲，连打不吃键。防无限连：浮空每挨一下重力 +6%，挨满 15 下自动受身；连击第 20 下起伤害 ×0.8。</p>
+      </div>
+      <div class="legend">
+        <h3>敌人预警色</h3>
+        <div class="warn"><i class="w"></i><span><b>白闪</b>：普通攻击，可格挡、可弹反。至少提前 18f。</span></div>
+        <div class="warn"><i class="r"></i><span><b>红光 + 「危」</b>：不可格挡，只能闪步或提前打断。至少提前 30f。</span></div>
+        <div class="warn"><i class="p"></i><span><b>紫光</b>：幻术，可能是假的，也可能从别处打来，用照夜照破。至少提前 24f。</span></div>
+        <h3 style="margin-top: 18px">连击评级</h3>
+        <p class="muted small">同一段连击里用过的招式种类越多，评级越高，剑意倍率越大。</p>
+        <div class="ranks">
+          <div class="rank"><span class="stamp">初</span><b>×1.0</b>开始</div>
+          <div class="rank"><span class="stamp">巧</span><b>×1.2</b>2 种</div>
+          <div class="rank"><span class="stamp">妙</span><b>×1.5</b>3 种</div>
+          <div class="rank"><span class="stamp">绝</span><b>×2.0</b>4 种 ≥20 连</div>
+          <div class="rank"><span class="stamp">神</span><b>×3.0</b>5 种 ≥35 连</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="levels">
+    <div class="sec-head">
+      <h2>地图与关卡</h2>
+      <p>从南到北一幅长卷：青崖镇、雾隐竹林、断岳山、幽泽，最后是悬在幽泽上空的蜃楼幻宫。关卡用 16×16 图块，一屏 30 列。</p>
+    </div>
+    <figure class="world">
+      <canvas data-board="world" role="img" aria-label="世界地图：五个地点沿虚线相连，镇魔碑在断岳山上，蜃楼幻宫浮在右上"></canvas>
+    </figure>
+    <div class="greybox-box">
+      <h3>第一章灰盒 · 10 屏</h3>
+      <p class="muted small" style="margin: 4px 0 10px">可以左右滚动。红色区域是锁屏战；青色标签是教学提示。数据就是 <span class="mono">concept/js/levels.js</span> 里的 ASCII 地图，后面会直接喂给游戏。</p>
+      <div class="scroll-x">
+        <canvas data-board="greybox" role="img" aria-label="第一章灰盒关卡图，从镇外山道到镇祠广场共 10 屏"></canvas>
+      </div>
+      <div class="gb-legend">
+        <span data-g="#">实地</span><span data-g="=">单向平台（屋檐、摊棚）</span><span data-g="^">火焰地面</span><span data-g="$">灵石罐</span><span data-g="?">剑谱残页</span><span data-g="C">灯笼检查点</span><span data-g="D">可破坏的门</span><span data-g="w/g/f">灰狼 / 狼卫 / 鬼火</span><span data-g="B">Boss</span>
+      </div>
+    </div>
+    <div class="pacing-box">
+      <h3>五章节奏</h3>
+      <p class="muted small" style="margin-top: 4px">宽度 = 屏数，高度 = 强度。每场锁屏战之后接一段低强度段落，Boss 前一定有灯笼。</p>
+      <div id="pacing"></div>
+      <div class="pace-legend" style="margin-top: 12px">
+        <span><i style="background: var(--pale)"></i>推进</span>
+        <span><i style="background: var(--seal)"></i>锁屏战</span>
+        <span><i style="background: var(--teal)"></i>平台 / 解谜</span>
+        <span><i style="background: #6e9b5a"></i>和平区</span>
+        <span><i style="background: var(--gold)"></i>剧情</span>
+        <span><i style="background: var(--ink)"></i>Boss</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="sec-head">
+      <h2>剧情</h2>
+      <p>主题是「照见真实」。每章结尾那句青色的话，是叶昭此时对魔族的看法，一章比一章接近真相。</p>
+    </div>
+    <div class="story">
+      <article class="beat">
+        <span class="num">第一章</span>
+        <h3>烽起青崖</h3>
+        <p>狼妖冲进集市，黑鬃高喊「魔君有令，人族背盟」。紫衣人影一闪，玄一真人替叶昭挡下紫雷，重伤前交出照夜剑。</p>
+        <div>
+          <p class="meta">Boss 黑鬃 · 解锁 照夜、奥义</p>
+          <p class="belief">魔族背盟了。</p>
+        </div>
+      </article>
+      <article class="beat">
+        <span class="num">第二章</span>
+        <h3>雾锁竹林</h3>
+        <p>救下被追杀的魔君信使小蝠。叶昭不信他，拿照夜剑一照，照出来的是真话：魔君被囚，有人冒名。</p>
+        <div>
+          <p class="meta">Boss 枯藤姥姥 · 解锁 剑气·破月、二段跳</p>
+          <p class="belief">也许有人冒名，但魔族信不过。</p>
+        </div>
+      </article>
+      <article class="beat">
+        <span class="num">第三章</span>
+        <h3>碑裂断岳</h3>
+        <p>镇魔碑开裂。一段可操作的回忆战里，三百年前的剑仙和魔族先君并肩，把烛幽封进地底。</p>
+        <div>
+          <p class="meta">Boss 镇岳 · 解锁 升龙斩</p>
+          <p class="belief">碑下镇的是烛幽，真正的敌人是蜃楼。</p>
+        </div>
+      </article>
+      <article class="beat">
+        <span class="num">第四章</span>
+        <h3>幽泽幻海</h3>
+        <p>魔族村落里，孩子们玩「剑客打魔头」，演魔头的孩子哭着不肯演。照醒被操控的左护法骨刹。</p>
+        <div>
+          <p class="meta">Boss 骨刹 · 解锁 疾风连斩</p>
+          <p class="belief">魔族和人族没有分别。</p>
+        </div>
+      </article>
+      <article class="beat">
+        <span class="num">第五章</span>
+        <h3>蜃楼幻宫</h3>
+        <p>在镜狱的四个倒影里找出真正的玄霜。两人合力击败蜃楼，再斩落他化出的蜃龙，重订碑盟。</p>
+        <div>
+          <p class="meta">Boss 蜃楼 → 蜃龙 · 解锁 镇地剑、照夜·霜月</p>
+          <p class="belief">「人魔注定为敌」才是最大的幻术。</p>
+        </div>
+      </article>
+    </div>
+    <div class="coda">
+      <blockquote>人魔不相犯；碑南碑北，各守一脉。<cite>三百年前的碑盟，剑仙沈寒川与魔族先君玄穹所立</cite></blockquote>
+      <p>尾声：青崖镇重建，魔族商队又来赶集。玄一把守碑人之位传给叶昭，小蝠在镇上开了铺子，招牌写着「人魔童叟无欺」。片尾，断岳山地底，一只巨大的眼睛缓缓睁开。</p>
+    </div>
+  </section>
+
+  <section id="open">
+    <div class="sec-head">
+      <h2>待确认</h2>
+      <p>下面四项先按默认值做了设计。改哪条告诉我，其余设计大多不受影响。</p>
+    </div>
+    <div class="decisions">
+      <div class="decision">
+        <h3>美术风格</h3>
+        <p class="pick">水墨剪影 + 骨骼动画。本页所有画面都是用这套管线画的。</p>
+        <p class="alt">备选：像素风。更像传统横版，但主角加怪物约要 800～1200 帧手绘，需要外部美术或素材包。</p>
+      </div>
+      <div class="decision">
+        <h3>平台</h3>
+        <p class="pick">PC 浏览器 + 键盘。</p>
+        <p class="alt">手柄放在 M6 打磨阶段；触屏暂不做，搓招在触屏上体验很差。</p>
+      </div>
+      <div class="decision">
+        <h3>规模</h3>
+        <p class="pick">5 章，每章 10～15 分钟。</p>
+        <p class="alt">备选：3 章压缩版（第 2、3 章合并，第 4、5 章合并），剧情主线不变。</p>
+      </div>
+      <div class="decision">
+        <h3>名字</h3>
+        <p class="pick">《照夜封魔录》、叶昭、玄霜、蜃楼，都是暂定。</p>
+        <p class="alt">主角名「昭」和剑名「照」同音，是有意的；改名时最好保留这层关系。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>文字设定在 <code>zhaoye/docs/</code>，从 <code>00-overview.md</code> 读起：战斗帧数据、怪物 AI、关卡表、数值推导、技术方案和里程碑都在那里。确认方向后，下一步是 M1 战斗原型：先用灰盒把手感调对，再上美术。</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
