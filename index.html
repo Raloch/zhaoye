@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>照夜封魔录 · 训练场</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d0e11;
+        --panel: #16181d;
+        --line: #272a31;
+        --text: #e8e5dc;
+        --muted: #8d9098;
+        --teal: #3fd0c9;
+        --seal: #c8372d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        color: var(--text);
+        font: 13px/1.6 'Noto Serif SC', 'Songti SC', 'PingFang SC', serif;
+        padding: 16px;
+      }
+      .shell {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+      }
+      .stage {
+        position: relative;
+      }
+      #game {
+        display: block;
+        aspect-ratio: 16 / 9;
+        border-radius: 4px;
+        background: #000;
+      }
+      .help {
+        position: absolute;
+        inset: 0;
+        overflow: auto;
+        padding: 18px 22px;
+        background: rgba(13, 14, 17, 0.94);
+        border-radius: 4px;
+      }
+      .help h2 {
+        margin: 0 0 4px;
+        font: 400 28px 'Ma Shan Zheng', 'STKaiti', serif;
+      }
+      .help .muted {
+        margin: 0 0 12px;
+        color: var(--muted);
+      }
+      .help .cols {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+      }
+      .help table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+      }
+      .help th {
+        text-align: left;
+        color: var(--muted);
+        font-weight: 600;
+        border-bottom: 1px solid var(--text);
+        padding: 4px 6px;
+      }
+      .help td {
+        padding: 4px 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      .help td.num {
+        font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .help td.cmd {
+        color: var(--teal);
+        white-space: nowrap;
+      }
+      #toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        justify-content: center;
+        align-items: center;
+      }
+      #toolbar .group {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+      #toolbar button {
+        font: inherit;
+        font-size: 12px;
+        color: var(--text);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 3px 9px;
+        cursor: pointer;
+        display: inline-flex;
+        gap: 6px;
+        align-items: baseline;
+      }
+      #toolbar button:hover {
+        border-color: #3a3e47;
+      }
+      #toolbar button[aria-pressed='true'] {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+      #toolbar kbd {
+        font: 600 10px ui-monospace, 'SF Mono', Menlo, monospace;
+        color: var(--muted);
+      }
+      .keys {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+        max-width: 1100px;
+      }
+      .keys b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      #status {
+        min-height: 1.2em;
+        margin: 0;
+        color: var(--teal);
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="stage">
+        <canvas id="game"></canvas>
+        <div id="help" class="help" hidden></div>
+      </div>
+      <div id="toolbar">
+        <div class="group">
+          <button data-key="1">灰狼 <kbd>1</kbd></button>
+          <button data-key="2">狼卫 <kbd>2</kbd></button>
+          <button data-key="3">木桩 <kbd>3</kbd></button>
+          <button data-key="0">清空 <kbd>0</kbd></button>
+          <button data-key="r">重置 <kbd>R</kbd></button>
+        </div>
+        <div class="group">
+          <button data-key="f1" data-toggle="hitboxes">判定框 <kbd>F1</kbd></button>
+          <button data-key="f2" data-toggle="frameData">帧数据 <kbd>F2</kbd></button>
+          <button data-key="f3" data-toggle="speed"><span>慢放 1×</span> <kbd>F3</kbd></button>
+          <button data-key="f4" data-toggle="paused">暂停 <kbd>F4</kbd></button>
+          <button data-key="]">逐帧 <kbd>]</kbd></button>
+          <button data-key="f5" data-toggle="inputs">输入 <kbd>F5</kbd></button>
+          <button data-key="f6" data-toggle="cheat">无敌 <kbd>F6</kbd></button>
+        </div>
+        <div class="group">
+          <button data-key="f9">存快照 <kbd>F9</kbd></button>
+          <button data-key="f10">读快照 <kbd>F10</kbd></button>
+          <button data-key="h" data-toggle="help">招式表 <kbd>H</kbd></button>
+          <button data-key="m" data-toggle="muted">静音 <kbd>M</kbd></button>
+        </div>
+      </div>
+      <p class="keys">
+        <b>A D</b> 移动（双击疾跑） · <b>K</b> 跳 · <b>J</b> 攻击（按住蓄力） · <b>L</b> 格挡 / 弹反 · <b>L+A/D</b> 闪步 ·
+        <b>U</b> 照夜 · <b>O</b> 奥义 · 特技：<b>←→J</b> 穿云刺 <b>↓→J</b> 剑气 <b>↓↑J</b> 升龙 <b>→→J</b> 疾风
+        <b>↓↓J</b> 镇地
+      </p>
+      <p id="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
